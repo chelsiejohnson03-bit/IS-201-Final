@@ -1,0 +1,56 @@
+body{
+    background-color:rgb(238, 255, 238);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:rgb(37, 104, 64);
+    
+}
+img{
+    display:block;
+    width:40%; 
+    margin-left: auto;
+    margin-right: auto;
+}
+iframe{
+    display:block;
+    width:70%; 
+    margin-left: auto;
+    margin-right: auto;
+}
+.header{
+    background-color: rgb(223, 246, 229);
+    color: rgb(37, 104, 64);
+    height:100px;
+    line-height: 100px;
+    text-align: center;
+}
+nav {
+  text-align: center;
+  margin: 25px 0;
+  
+}
+nav a{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:rgb(42, 128, 108);
+    text-decoration: underline;
+}
+
+.class{
+     display:block;
+    width:70%; 
+    margin-left: auto;
+    margin-right: auto;
+}
+.tableauPlaceholder {
+  width: 70%px !important;
+  margin: 0 auto;
+}
+.footer{
+    background-color: rgb(248, 246, 246);
+    color:rgb(55, 112, 91);
+    height:25px;
+    line-height: 25px;
+    position: fixed;
+    bottom: 0px;
+    right:0px;
+    left:0px;
+}

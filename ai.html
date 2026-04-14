@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tic Tac Toe – First to 5</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 40px;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+    }
+
+    #scoreboard {
+        margin-bottom: 20px;
+        font-size: 18px;
+    }
+
+    #board {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(3, 100px);
+        gap: 5px;
+    }
+
+    .cell {
+        background: white;
+        border: 2px solid #333;
+        font-size: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #message {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Tic Tac Toe</h1>
+
+<div id="scoreboard">
+    Player (X): <span id="playerScore">0</span> |
+    Computer (O): <span id="computerScore">0</span>
+</div>
+
+<div id="board"></div>
+
+<div id="message"></div>
+
+<button onclick="startRound()">Start / Next Round</button>
+
+<script>
+    const boardElement = document.getElementById("board");
+    const messageElement = document.getElementById("message");
+    const playerScoreElement = document.getElementById("playerScore");
+    const computerScoreElement = document.getElementById("computerScore");
+
+    let board = Array(9).fill("");
+    let playerScore = 0;
+    let computerScore = 0;
+    let roundActive = false;
+
+    const winningCombos = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+    ];
+
+    function createBoard() {
+        boardElement.innerHTML = "";
+        board.forEach((value) => {
+            const cell = document.createElement("div");
+            cell.classList.add("cell");
+            cell.textContent = value;
+            boardElement.appendChild(cell);
+        });
+    }
+
+    function startRound() {
+        if (playerScore === 5 || computerScore === 5) {
+            resetGame();
+            return;
+        }
+
+        board = Array(9).fill("");
+        roundActive = true;
+        messageElement.textContent = "Your turn! Choose a spot (1–9).";
+        createBoard();
+        playerTurn();
+    }
+
+    function playerTurn() {
+        let choice;
+
+        while (true) {
+            choice = prompt(
+                "Choose where to place your X (1-9):\n\n" +
+                "1 | 2 | 3\n" +
+                "4 | 5 | 6\n" +
+                "7 | 8 | 9"
+            );
+
+            if (choice === null) return;
+
+            const index = parseInt(choice) - 1;
+
+            if (index >= 0 && index <= 8 && board[index] === "") {
+                board[index] = "X";
+                break;
+            } else {
+                alert("Invalid choice. Try again.");
+            }
+        }
+
+        createBoard();
+
+        if (checkWin("X")) {
+            playerScore++;
+            updateScores();
+            messageElement.textContent = "You win this round!";
+            roundActive = false;
+            checkChampion();
+            return;
+        }
+
+        if (isBoardFull()) {
+            messageElement.textContent = "It's a tie! No points awarded.";
+            roundActive = false;
+            return;
+        }
+
+        setTimeout(computerTurn, 500);
+    }
+
+    function computerTurn() {
+        const emptySpots = board
+            .map((val, idx) => val === "" ? idx : null)
+            .filter(v => v !== null);
+
+        const move = emptySpots[Math.floor(Math.random() * emptySpots.length)];
+        board[move] = "O";
+        createBoard();
+
+        if (checkWin("O")) {
+            computerScore++;
+            updateScores();
+            messageElement.textContent = "Computer wins this round!";
+            roundActive = false;
+            checkChampion();
+            return;
+        }
+
+        if (isBoardFull()) {
+            messageElement.textContent = "It's a tie! No points awarded.";
+            roundActive = false;
+            return;
+        }
+
+        playerTurn();
+    }
+
+    function checkWin(player) {
+        return winningCombos.some(combo =>
+            combo.every(index => board[index] === player)
+        );
+    }
+
+    function isBoardFull() {
+        return board.every(cell => cell !== "");
+    }
+
+    function updateScores() {
+        playerScoreElement.textContent = playerScore;
+        computerScoreElement.textContent = computerScore;
+    }
+
+    function checkChampion() {
+        if (playerScore === 5) {
+            alert("🎉 You are the champion! 🎉");
+        } else if (computerScore === 5) {
+            alert("💻 The computer is the champion!");
+        }
+    }
+
+    function resetGame() {
+        playerScore = 0;
+        computerScore = 0;
+        updateScores();
+        startRound();
+    }
+
+    createBoard();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+p{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#top{
+    text-decoration: underline;
+}
+
+.emphasizeText{
+    font-style: italic; 
+    color:rgb(40, 132, 88);
+}
+body{
+    background-color: rgb(235, 248, 238);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+    border: 5px solid rgb(38, 122, 102);
+    margin: 20px;
+    padding: 50px;
+}
